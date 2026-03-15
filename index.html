@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>PixelCrushLabs – Free Online Image Compressor & Converter</title>
+    <meta name="description" content="Compress, convert, and resize images online for free. Supports JPG, PNG, WEBP, AVIF, BMP, GIF, and more. No uploads – all processing happens in your browser.">
+    <meta name="keywords" content="image compressor, image converter, resize image, jpg to png, webp, avif, bmp, gif, free online tool">
+    <meta name="author" content="PixelCrushLabs">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://hashirkx045.github.io/pixelcrushlabs">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="PixelCrushLabs – Free Online Image Compressor & Converter">
+    <meta property="og:description" content="Compress, convert, and resize images instantly in your browser. No uploads, no tracking.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hashirkx045.github.io/pixelcrushlabs">
+    <meta property="og:image" content="https://pixelcrushlabs.app/og-image.png">
+    <meta property="og:site_name" content="PixelCrushLabs">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PixelCrushLabs – Free Online Image Compressor & Converter">
+    <meta name="twitter:description" content="Compress, convert, and resize images instantly in your browser. No uploads, no tracking.">
+    <meta name="twitter:image" content="https://hashirkx045.github.io/pixelcrushlabs">
+    
+    <!-- Favicon (placeholder) -->
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA8UlEQVRYhe2VMQ6CMBSGv0pcnJlcOBoP4BFMHE3cPYQTJ3cP4AHEG3gCj8Dk4lYTaggh6UsF2k7wJ0va9+X9L60tMplMJpPJDAVvXQfzZ1mCc6CVJGmawnEcEEJA13Xw3g+2cZYlSJIEvPcQQoBt24AIfddB0zRwzvdedeQcQEqB4zjAe4+2bSGEwH3f2bbdLhBCwDnHtm1YlgWcc7iuC9d1Ic/zbNse2Pe9OI4DKaVY1xVFUaBpGmzbhm3bsm0PKKVQliUopQAAzjkCAG3bwrZt2bYHhBAQIUIIsG0bUkpYa1EUBYqi+PaJpml+ejmZTCaT+U9e/jChqEU3LJ0AAAAASUVORK5CYII=">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: #f4f6fa;
+            color: #1e293b;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Smooth animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header {
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        main {
+            flex: 1;
+            max-width: 1280px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        /* Upload area */
+        .upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 1.5rem;
+            padding: 3.5rem 2rem;
+            text-align: center;
+            background: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .upload-area:hover {
+            border-color: #2563eb;
+            background: #f0f9ff;
+            transform: scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-area:active {
+            transform: scale(0.98);
+        }
+
+        .upload-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1rem;
+            background: #e2e8f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .upload-area:hover .upload-icon {
+            background: #2563eb20;
+        }
+
+        .upload-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: #2563eb;
+            stroke-width: 1.5;
+        }
+
+        .upload-area p {
+            font-size: 1.25rem;
+            color: #334155;
+            margin-bottom: 0.75rem;
+        }
+
+        .upload-area button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
+        }
+
+        .upload-area button:hover {
+            background: #1d4ed8;
+        }
+
+        .upload-area button:active {
+            transform: scale(0.95);
+        }
+
+        .upload-area small {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        /* Editor panel */
+        .editor {
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            margin-top: 2.5rem;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .preview-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .preview {
+            background: #f8fafc;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .preview:hover {
+            transform: translateY(-4px);
+        }
+
+        .preview h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 1rem;
+            letter-spacing: 0.025em;
+        }
+
+        .preview-image {
+            background: #e2e8f0;
+            border-radius: 1rem;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview img {
+            max-width: 100%;
+            max-height: 250px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .file-size {
+            font-size: 0.95rem;
+            color: #64748b;
+            background: #f1f5f9;
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            border-radius: 2rem;
+        }
+
+        .controls {
+            background: #f8fafc;
+            border-radius: 1.5rem;
+            padding: 2rem;
+        }
+
+        .control-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .control-label {
+            font-weight: 600;
+            color: #334155;
+            min-width: 90px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #94a3b8;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: help;
+            transition: background 0.2s;
+        }
+
+        .info-icon:hover {
+            background: #2563eb;
+        }
+
+        /* Custom dropdown */
+        .custom-dropdown {
+            position: relative;
+            width: 220px;
+            user-select: none;
+        }
+
+        .dropdown-selected {
+            background: transparent;
+            border: 1px solid #cbd5e1;
+            border-radius: 2rem;
+            padding: 0.6rem 1rem;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .dropdown-selected:hover {
+            border-color: #2563eb;
+        }
+
+        .dropdown-selected:focus-within {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .dropdown-arrow {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-arrow.open {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-options {
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: max-height 0.3s ease, opacity 0.2s ease;
+            z-index: 10;
+        }
+
+        .dropdown-options.open {
+            max-height: 300px;
+            opacity: 1;
+        }
+
+        .dropdown-option {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            color: #1e293b;
+        }
+
+        .dropdown-option:hover {
+            background: #2563eb20;
+        }
+
+        .dropdown-option.selected {
+            background: #2563eb10;
+            font-weight: 500;
+            color: #2563eb;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            min-width: 200px;
+            padding: 0;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #2563eb;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.2s;
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            background: #1d4ed8;
+        }
+
+        .resize-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .resize-input {
+            width: 100px;
+            padding: 0.6rem 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 2rem;
+            font-size: 0.95rem;
+            background: white;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .resize-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            color: #475569;
+            font-size: 0.95rem;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #2563eb;
+        }
+
+        /* Download button with loading state */
+        .download-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 3rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3);
+            margin-top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            min-width: 220px;
+        }
+
+        .download-btn:hover:not(:disabled) {
+            background: #059669;
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.4);
+        }
+
+        .download-btn:active:not(:disabled) {
+            transform: scale(0.97);
+        }
+
+        .download-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            background: #94a3b8;
+            box-shadow: none;
+        }
+
+        /* Spinner animation */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: #1e293b;
+            color: #94a3b8;
+            margin-top: 3rem;
+        }
+
+        .footer-link {
+            color: #10b981; /* green */
+            font-weight: 500;
+            transition: color 0.2s, text-decoration 0.2s;
+        }
+
+        .footer-link:hover {
+            color: #34d399;
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .preview-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .control-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .control-label {
+                min-width: auto;
+            }
+
+            .custom-dropdown {
+                width: 100%;
+            }
+
+            input[type="range"] {
+                width: 100%;
+            }
+
+            .resize-group {
+                width: 100%;
+            }
+
+            .resize-input {
+                width: calc(50% - 1rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .upload-area {
+                padding: 2rem 1rem;
+            }
+
+            .editor {
+                padding: 1.5rem;
+            }
+
+            .download-btn {
+                width: 100%;
+                min-width: auto;
+            }
+        }
+    </style>
+    <!-- Libraries for BMP and GIF support -->
+    <script src="https://cdn.jsdelivr.net/npm/bmp-js@0.2.0/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.js"></script>
+</head>
+<body>
+    <header>
+        <h1>PixelCrushLabs</h1>
+        <p>Compress, convert, and resize images — entirely in your browser</p>
+    </header>
+
+    <main>
+        <!-- Upload area -->
+        <div class="upload-area" id="uploadArea">
+            <input type="file" id="fileInput" accept="image/*" hidden>
+            <div class="upload-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 16v-6m0 0l-2 2m2-2l2 2M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M16 8l-4-4-4 4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <p>Drag & drop an image here, or <button id="browseBtn">browse files</button></p>
+            <small>Supports JPG, PNG, WEBP, AVIF, BMP, GIF, TIFF (TIFF may have limited support)</small>
+        </div>
+
+        <!-- Editor panel -->
+        <div class="editor" id="editor" style="display: none;">
+            <div class="preview-container">
+                <div class="preview">
+                    <h3>Original (Before)</h3>
+                    <div class="preview-image">
+                        <img id="originalImg" alt="Original">
+                    </div>
+                    <span class="file-size" id="originalSize">0 KB</span>
+                </div>
+                <div class="preview">
+                    <h3>Processed (After)</h3>
+                    <div class="preview-image">
+                        <img id="compressedImg" alt="Processed">
+                    </div>
+                    <span class="file-size" id="compressedSize">0 KB</span>
+                </div>
+            </div>
+
+            <div class="controls">
+                <!-- Format dropdown (custom) -->
+                <div class="control-row">
+                    <span class="control-label">
+                        Format
+                        <span class="info-icon" title="Choose output format. AVIF offers best compression. BMP and GIF are fully supported.">i</span>
+                    </span>
+                    <div class="custom-dropdown" id="formatDropdown">
+                        <div class="dropdown-selected" id="dropdownSelected">
+                            <span id="selectedFormat">JPEG</span>
+                            <svg class="dropdown-arrow" id="dropdownArrow" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="dropdown-options" id="dropdownOptions">
+                            <div class="dropdown-option" data-value="image/jpeg">JPEG (MozJPEG)</div>
+                            <div class="dropdown-option" data-value="image/png">PNG</div>
+                            <div class="dropdown-option" data-value="image/webp">WEBP</div>
+                            <div class="dropdown-option" data-value="image/avif">AVIF</div>
+                            <div class="dropdown-option" data-value="image/bmp">BMP</div>
+                            <div class="dropdown-option" data-value="image/gif">GIF</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quality slider -->
+                <div class="control-row" id="qualityControl">
+                    <span class="control-label">
+                        Quality
+                        <span class="info-icon" title="Higher quality = larger file. Only applies to JPEG, WEBP, AVIF.">i</span>
+                    </span>
+                    <input type="range" id="quality" min="0" max="1" step="0.01" value="0.8">
+                    <span id="qualityValue">0.8</span>
+                </div>
+
+                <!-- Resize controls -->
+                <div class="control-row">
+                    <span class="control-label">
+                        Resize
+                        <span class="info-icon" title="Set custom dimensions. Lock aspect maintains original proportions.">i</span>
+                    </span>
+                    <div class="resize-group">
+                        <input type="number" id="width" class="resize-input" placeholder="Width" min="1">
+                        <span>×</span>
+                        <input type="number" id="height" class="resize-input" placeholder="Height" min="1">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="lockAspect" checked> Lock aspect
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Download button with loading animation -->
+                <div class="control-row">
+                    <button class="download-btn" id="downloadBtn">
+                        <span id="downloadText">Download processed image</span>
+                        <span id="downloadSpinner" class="spinner" style="display: none;"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025  <a href="https://hashirkhan.com" target="_blank" rel="noopener noreferrer" class="footer-link">PixelCrushLabs</a> – All processing happens locally. No uploads, no tracking.</p>
+    </footer>
+
+    <script>
+        // DOM elements
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const browseBtn = document.getElementById('browseBtn');
+        const editor = document.getElementById('editor');
+        const originalImg = document.getElementById('originalImg');
+        const compressedImg = document.getElementById('compressedImg');
+        const originalSizeSpan = document.getElementById('originalSize');
+        const compressedSizeSpan = document.getElementById('compressedSize');
+        const qualityInput = document.getElementById('quality');
+        const qualityValue = document.getElementById('qualityValue');
+        const widthInput = document.getElementById('width');
+        const heightInput = document.getElementById('height');
+        const lockAspect = document.getElementById('lockAspect');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const downloadText = document.getElementById('downloadText');
+        const downloadSpinner = document.getElementById('downloadSpinner');
+
+        // Custom dropdown elements
+        const dropdownSelected = document.getElementById('dropdownSelected');
+        const dropdownArrow = document.getElementById('dropdownArrow');
+        const dropdownOptions = document.getElementById('dropdownOptions');
+        const selectedFormatSpan = document.getElementById('selectedFormat');
+        const optionElements = document.querySelectorAll('.dropdown-option');
+
+        let currentFormat = 'image/jpeg'; // default
+        let originalImage = null;
+        let originalDimensions = { width: 0, height: 0 };
+        let isDownloading = false; // prevent multiple clicks during animation
+
+        // ---------- Custom dropdown logic ----------
+        function toggleDropdown(open) {
+            if (open) {
+                dropdownOptions.classList.add('open');
+                dropdownArrow.classList.add('open');
+            } else {
+                dropdownOptions.classList.remove('open');
+                dropdownArrow.classList.remove('open');
+            }
+        }
+
+        dropdownSelected.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = dropdownOptions.classList.contains('open');
+            toggleDropdown(!isOpen);
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!dropdownSelected.contains(e.target) && !dropdownOptions.contains(e.target)) {
+                toggleDropdown(false);
+            }
+        });
+
+        // Handle option selection
+        optionElements.forEach(opt => {
+            opt.addEventListener('click', () => {
+                const value = opt.dataset.value;
+                const text = opt.textContent;
+                currentFormat = value;
+                selectedFormatSpan.textContent = text;
+
+                // Update selected class
+                optionElements.forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+
+                // Close dropdown
+                toggleDropdown(false);
+
+                // Disable quality slider for lossless formats (PNG, BMP, GIF)
+                const lossless = ['image/png', 'image/bmp', 'image/gif'].includes(value);
+                qualityInput.disabled = lossless;
+                qualityValue.textContent = lossless ? 'N/A' : qualityInput.value;
+
+                // Re-compress with new format
+                compressAndPreview();
+            });
+        });
+
+        // Set default selected
+        optionElements[0].classList.add('selected'); // JPEG
+
+        // ---------- File upload ----------
+        browseBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            fileInput.click();
+        });
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#2563eb';
+            uploadArea.style.background = '#f0f9ff';
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = '#cbd5e1';
+            uploadArea.style.background = 'white';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#cbd5e1';
+            uploadArea.style.background = 'white';
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                handleFile(file);
+            } else {
+                alert('Please drop an image file.');
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) handleFile(file);
+        });
+
+        function handleFile(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                originalImg.src = e.target.result;
+                originalImg.onload = () => {
+                    originalImage = originalImg;
+                    originalDimensions = {
+                        width: originalImg.naturalWidth,
+                        height: originalImg.naturalHeight
+                    };
+                    widthInput.value = originalDimensions.width;
+                    heightInput.value = originalDimensions.height;
+                    displayOriginalSize(file.size);
+                    editor.style.display = 'block';
+                    compressAndPreview();
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function displayOriginalSize(bytes) {
+            const size = (bytes / 1024).toFixed(2);
+            originalSizeSpan.textContent = `${size} KB`;
+        }
+
+        // ---------- Compression function (now supports BMP and GIF) ----------
+        function compressAndPreview() {
+            if (!originalImage) return;
+
+            const quality = parseFloat(qualityInput.value);
+            const targetWidth = parseInt(widthInput.value) || originalDimensions.width;
+            const targetHeight = parseInt(heightInput.value) || originalDimensions.height;
+
+            // Create a canvas with the target dimensions
+            const canvas = document.createElement('canvas');
+            canvas.width = targetWidth;
+            canvas.height = targetHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(originalImage, 0, 0, targetWidth, targetHeight);
+
+            // Handle special formats
+            if (currentFormat === 'image/bmp') {
+                // Use bmp-js to encode BMP
+                const imageData = ctx.getImageData(0, 0, targetWidth, targetHeight);
+                const bmpData = BMP.encode(imageData, targetWidth, targetHeight);
+                const blob = new Blob([bmpData.data], { type: 'image/bmp' });
+                updatePreviewWithBlob(blob);
+            } else if (currentFormat === 'image/gif') {
+                // Use gif.js to encode GIF
+                const gif = new GIF({
+                    workers: 2,
+                    quality: 10,
+                    width: targetWidth,
+                    height: targetHeight
+                });
+                gif.addFrame(canvas, { copy: true, delay: 0 }); // Single frame
+                gif.on('finished', (blob) => {
+                    updatePreviewWithBlob(blob);
+                });
+                gif.render();
+            } else {
+                // Default: canvas.toBlob for JPEG, PNG, WEBP, AVIF (if supported)
+                canvas.toBlob((blob) => {
+                    if (blob) {
+                        updatePreviewWithBlob(blob);
+                    }
+                }, currentFormat, quality);
+            }
+        }
+
+        function updatePreviewWithBlob(blob) {
+            const url = URL.createObjectURL(blob);
+            compressedImg.src = url;
+            compressedImg.onload = () => URL.revokeObjectURL(url);
+            const sizeKB = (blob.size / 1024).toFixed(2);
+            compressedSizeSpan.textContent = `${sizeKB} KB`;
+        }
+
+        // ---------- Event listeners for controls ----------
+        qualityInput.addEventListener('input', () => {
+            qualityValue.textContent = qualityInput.value;
+            compressAndPreview();
+        });
+
+        let resizeTimeout;
+        widthInput.addEventListener('input', () => {
+            if (lockAspect.checked && originalDimensions.width) {
+                const aspect = originalDimensions.height / originalDimensions.width;
+                heightInput.value = Math.round(widthInput.value * aspect);
+            }
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(compressAndPreview, 300);
+        });
+
+        heightInput.addEventListener('input', () => {
+            if (lockAspect.checked && originalDimensions.height) {
+                const aspect = originalDimensions.width / originalDimensions.height;
+                widthInput.value = Math.round(heightInput.value * aspect);
+            }
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(compressAndPreview, 300);
+        });
+
+        // Download with 5-second animation
+        downloadBtn.addEventListener('click', () => {
+            if (!originalImage || isDownloading) return;
+
+            // Start loading animation
+            isDownloading = true;
+            downloadBtn.disabled = true;
+            downloadText.textContent = 'Processing...';
+            downloadSpinner.style.display = 'inline-block';
+
+            // Wait 5 seconds, then perform download
+            setTimeout(() => {
+                performDownload();
+                
+                // Reset button after download (give a little extra time)
+                setTimeout(() => {
+                    downloadBtn.disabled = false;
+                    downloadText.textContent = 'Download processed image';
+                    downloadSpinner.style.display = 'none';
+                    isDownloading = false;
+                }, 500); // short delay to show completion
+            }, 5000); // 5-second animation
+        });
+
+        function performDownload() {
+            if (!originalImage) return;
+
+            const quality = parseFloat(qualityInput.value);
+            const targetWidth = parseInt(widthInput.value) || originalDimensions.width;
+            const targetHeight = parseInt(heightInput.value) || originalDimensions.height;
+
+            const canvas = document.createElement('canvas');
+            canvas.width = targetWidth;
+            canvas.height = targetHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(originalImage, 0, 0, targetWidth, targetHeight);
+
+            if (currentFormat === 'image/bmp') {
+                const imageData = ctx.getImageData(0, 0, targetWidth, targetHeight);
+                const bmpData = BMP.encode(imageData, targetWidth, targetHeight);
+                const blob = new Blob([bmpData.data], { type: 'image/bmp' });
+                downloadBlob(blob, 'bmp');
+            } else if (currentFormat === 'image/gif') {
+                const gif = new GIF({
+                    workers: 2,
+                    quality: 10,
+                    width: targetWidth,
+                    height: targetHeight
+                });
+                gif.addFrame(canvas, { copy: true, delay: 0 });
+                gif.on('finished', (blob) => {
+                    downloadBlob(blob, 'gif');
+                });
+                gif.render();
+            } else {
+                canvas.toBlob((blob) => {
+                    if (blob) {
+                        const ext = currentFormat.split('/')[1];
+                        downloadBlob(blob, ext);
+                    }
+                }, currentFormat, quality);
+            }
+        }
+
+        function downloadBlob(blob, extension) {
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `pixelcrushlabs.${extension}`;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
+
+        // Initialize quality display
+        qualityValue.textContent = qualityInput.value;
+    </script>
+</body>
+</html>
